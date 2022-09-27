@@ -1,12 +1,12 @@
 #QGIS 3.18 on Ubuntu 18.04
 # Pull base image.
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL maintainer="RafDouglas C. Tommasi<https://github.com/rafdouglas>"
 
 LABEL org.label-schema.schema-version = "1.0"
-LABEL org.label-schema.version = "QGIS_3.20"
-LABEL org.label-schema.description = "QGIS 3.20.x docker"
+LABEL org.label-schema.version = "QGIS_3.26"
+LABEL org.label-schema.description = "QGIS 3.26.x docker"
 
 LABEL org.label-schema.url="http://rafdouglas.science"
 LABEL org.label-schema.vcs-url = "https://github.com/rafdouglas"
@@ -29,7 +29,7 @@ RUN \
 RUN \
   apt-get update && \
   #export DEBIAN_FRONTEND=noninteractive && \
-  #DEBIAN_FRONTEND="noninteractive" TZ="Europe/Rome" apt-get install -y tzdata && \
+  #DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris" apt-get install -y tzdata && \
   #apt-get install -y tzdata && \
   #/bin/ln -sf /usr/share/zoneinfo/Etc/Zulu  /etc/localtime && \
   #dpkg-reconfigure --frontend noninteractive tzdata && \
@@ -42,7 +42,7 @@ RUN \
 
 #Install the actual QGIS package, than perform cleanup
 RUN \
-  add-apt-repository -s 'deb https://qgis.org/ubuntu/ focal main' 
+  add-apt-repository -s 'deb https://qgis.org/ubuntu/ jammy main' 
 RUN \
   apt-get update && \
   apt-get install -y  python3-pyqt5.qtxmlpatterns && \
