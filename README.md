@@ -1,6 +1,3 @@
-[![Image info](https://images.microbadger.com/badges/image/rafdouglas/qgis_desktop.svg)](https://hub.docker.com/r/rafdouglas/qgis_desktop "Click to view the image on Docker Hub")
-[![Docker pulls](https://img.shields.io/docker/pulls/rafdouglas/qgis_desktop.svg)](https://hub.docker.com/r/rafdouglas/qgis_desktop "Click to view the image on Docker Hub")
-
 # QGIS 3.x Desktop running on Docker
 
 A full-fledge QGIS 3.x running on Docker.
@@ -12,24 +9,13 @@ Preferences are retained across sessions, and the integration with your physical
 
 ![qgis_desktop_docker screenshot](https://raw.githubusercontent.com/rafdouglas/qgis_desktop_docker/3.4/docs/qgis_desktop_docker_3.4.jpg)
 
-
-## Installation And Usage
-
-This is the easiest and fastest way, since it downloads the image from DockerHub, you don't need to compile anything on your computer.
-
-    git clone https://github.com/rafdouglas/qgis_desktop_docker.git
-    cd qgis_desktop_docker
-    sh qgis_run.sh
-
-    #after the container is running (i.e. with the full GUI), you can optionally use the Command Line:
-    sh qgis_cli.sh
-
 ### Build your own
 
 If you instead feel like customizing something, you can build the image locally:
 
-    git clone https://github.com/rafdouglas/qgis_desktop_docker.git
+    git clone https://github.com/jancelin/qgis_desktop_docker.git
     cd qgis_desktop_docker
+    
     #(Edit the Dockerfile or what you need)
     . ./build
     
