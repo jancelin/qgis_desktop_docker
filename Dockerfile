@@ -1,15 +1,14 @@
-#QGIS 3.18 on Ubuntu 18.04
 # Pull base image.
 FROM ubuntu:22.04
 
-LABEL maintainer="RafDouglas C. Tommasi<https://github.com/rafdouglas>"
+LABEL maintainer="Julien Ancelin<https://github.com/jancelin>"
 
 LABEL org.label-schema.schema-version = "1.0"
-LABEL org.label-schema.version = "QGIS_3.26"
-LABEL org.label-schema.description = "QGIS 3.26.x docker"
+LABEL org.label-schema.version = "QGIS_3.27"
+LABEL org.label-schema.description = "QGIS 3.27.x docker"
 
 LABEL org.label-schema.url="http://rafdouglas.science"
-LABEL org.label-schema.vcs-url = "https://github.com/rafdouglas"
+LABEL org.label-schema.vcs-url = "https://github.com/jancelin"
 LABEL org.label-schema.docker.cmd = "sh ./qgis_run.sh"
 
 
@@ -33,31 +32,28 @@ RUN \
   #apt-get install -y tzdata && \
   #/bin/ln -sf /usr/share/zoneinfo/Etc/Zulu  /etc/localtime && \
   #dpkg-reconfigure --frontend noninteractive tzdata && \
-  apt-get -y install ca-certificates apt-utils wget && \
-  wget -qO - https://qgis.org/downloads/qgis-2020.gpg.key | gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/qgis-archive.gpg --import && \
-  chmod a+r /etc/apt/trusted.gpg.d/qgis-archive.gpg && \
-  wget --no-check-certificate -O - https://qgis.org/downloads/qgis-2017.gpg.key | gpg --batch --yes --import && \
-  gpg --yes --batch --fingerprint CAEB3DC3BDF7FB45 && \
-  apt-key adv --keyserver keyserver.ubuntu.com --recv-key 51F523511C7028C3 
+  apt-get -y install ca-certificates apt-utils wget
 
-#Install the actual QGIS package, than perform cleanup
 RUN \
-  add-apt-repository -s 'deb https://qgis.org/ubuntu/ jammy main' 
+mkdir -m755 -p /etc/apt/keyrings && \
+wget -O /etc/apt/keyrings/qgis-archive-keyring.gpg https://download.qgis.org/downloads/qgis-archive-keyring.gpg
+
+COPY qgis.sources /etc/apt/sources.list.d/qgis.sources
+
 RUN \
   apt-get update && \
   apt-get install -y  python3-pyqt5.qtxmlpatterns && \
-  apt-get install -y  python3-qgis qgis qgis-plugin-grass 
-RUN \
-#  apt-get remove -y --purge qt4-linguist-tools libqt4-dev-bin gfortran-5 && \
-  apt-get remove -y --purge qt4-qmake cmake-data && \
-  apt-get remove -y --purge libqt4* libgtk* libsane *gnome* libsane *pango* glib* *gphoto* && \ 
-  apt-get remove -y --purge build-essential gnupg software-properties-common apt-utils wget && \
-  apt-get clean
+  apt-get install -y  python3-qgis qgis qgis-plugin-grass
+#RUN \
+#  apt-get remove -y --purge cmake-data && \
+#  apt-get remove -y --purge libqt4* libgtk* libsane *gnome* libsane *pango* glib* *gphoto* && \
+#  apt-get remove -y --purge build-essential gnupg software-properties-common apt-utils wget && \
+#  apt-get clean
 
-#Create directories to be used 
+#Create directories to be used
 RUN \
   mkdir -p /root/ && \
-  mkdir -p /root/qgis-docker-files 
+  mkdir -p /root/qgis-docker-files
 
 # Set environment variables.
 ENV HOME /root
@@ -66,4 +62,5 @@ ENV HOME /root
 WORKDIR /root
 
 # Define default command.
+#CMD ["find", "/","-name","qgis"]
 CMD ["qgis"]
